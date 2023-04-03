@@ -31,6 +31,7 @@ import com.google.googlejavaformat.FormattingError;
 import com.google.googlejavaformat.Newlines;
 import com.google.googlejavaformat.Op;
 import com.google.googlejavaformat.OpsBuilder;
+import com.google.googlejavaformat.java.JavaFormatterOptions.Style;
 import com.sun.tools.javac.file.JavacFileManager;
 import com.sun.tools.javac.parser.JavacParser;
 import com.sun.tools.javac.parser.ParserFactory;
@@ -86,7 +87,7 @@ import javax.tools.StandardLocation;
 @Immutable
 public final class Formatter {
 
-  public static final int MAX_LINE_LENGTH = 100;
+  public static final int MAX_LINE_LENGTH = 120;
 
   static final Range<Integer> EMPTY_RANGE = Range.closedOpen(-1, -1);
 
@@ -94,11 +95,12 @@ public final class Formatter {
 
   /** A new Formatter instance with default options. */
   public Formatter() {
-    this(JavaFormatterOptions.defaultOptions());
+    this(JavaFormatterOptions.builder().style(Style.AOSP).formatJavadoc(true).reorderModifiers(true).build());
   }
 
   public Formatter(JavaFormatterOptions options) {
-    this.options = options;
+    //this.options = options;
+    this.options = JavaFormatterOptions.builder().style(Style.AOSP).formatJavadoc(true).reorderModifiers(true).build();
   }
 
   /**
@@ -111,6 +113,7 @@ public final class Formatter {
    */
   static void format(final JavaInput javaInput, JavaOutput javaOutput, JavaFormatterOptions options)
       throws FormatterException {
+        options = JavaFormatterOptions.builder().style(Style.AOSP).formatJavadoc(true).reorderModifiers(true).build();
     Context context = new Context();
     DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
     context.put(DiagnosticListener.class, diagnostics);
