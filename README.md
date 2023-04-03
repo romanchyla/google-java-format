@@ -1,3 +1,30 @@
+# What's in here:
+
+- modified the formatter to use width=120 and AOSP style (4 spaces) by default
+- to rebuild the eclipse formatter plugin:
+
+```
+mvn clean install -DskipTests=true
+cd eclipse_plugin
+mvn package
+ls target/google*
+```
+
+The plugin is now built inside `target` -- to install it into Eclipse:
+
+WARNING: Eclipse not always updates the plugin!!!
+
+```shell
+
+# remove the plugin dependencies
+find ~/Downloads/eclipse/ -iname *google-java-format*.jar | xargs rm
+
+# install the plugin into dropins
+cp target/google-java-format-eclipse-plugin*.jar ~/Downloads/eclipse/dropins/
+
+# restart eclipse
+```
+
 # google-java-format
 
 `google-java-format` is a program that reformats Java source code to comply with
